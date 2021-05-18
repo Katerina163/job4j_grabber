@@ -40,7 +40,7 @@ public class SqlRuDateTimeParser implements DateTimeParser {
             case "окт": return 10;
             case "ноя": return 11;
             case "дек": return 12;
+            default: return -1;
         }
-        return -1;
     }
 }
