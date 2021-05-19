@@ -4,11 +4,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import ru.job4j.html.Post;
 import ru.job4j.utils.SqlRuDateTimeParser;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public class SqlRuParse implements Parse {
@@ -31,7 +35,10 @@ public class SqlRuParse implements Parse {
                 post.setText(texts.eachText().get(1));
                 Elements dates = document.select(".msgFooter");
                 String date = dates.eachText().get(0);
-                post.setCreated(parser.parse(date.substring(0, date.indexOf("[")).trim()));
+                LocalDateTime session = parser.parse(date.substring(0, date.indexOf("[")));
+                ZonedDateTime zdt = session.atZone(ZoneId.systemDefault());
+                long millis = zdt.toInstant().toEpochMilli();
+                post.setDate(new Date(millis));
                 post.setName(href.text());
                 post.setId(id++);
                 result.add(post);
@@ -53,7 +60,10 @@ public class SqlRuParse implements Parse {
             post.setText(texts.eachText().get(1));
             Elements dates = document.select(".msgFooter");
             String date = dates.eachText().get(0);
-            post.setCreated(parser.parse(date.substring(0, date.indexOf("[")).trim()));
+            LocalDateTime session = parser.parse(date.substring(0, date.indexOf("[")));
+            ZonedDateTime zdt = session.atZone(ZoneId.systemDefault());
+            long millis = zdt.toInstant().toEpochMilli();
+            post.setDate(new Date(millis));
             Elements names = document.select(".messageHeader");
             String name = names.eachText().get(0);
             post.setName(name.substring(0, name.indexOf("[")).trim());
