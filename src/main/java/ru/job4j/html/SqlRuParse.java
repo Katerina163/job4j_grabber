@@ -26,33 +26,20 @@ public class SqlRuParse {
                 }
             }
         }
+        Post post = load("https://www.sql.ru/forum/1325330/lidy-be-fe-senior-cistemnye-analitiki-qa-i-devops-moskva-do-200t");
+        System.out.println(post.getText());
+        System.out.println(post.getCreated());
     }
 
-    public static List<Post> load(int page) throws Exception {
-        List<Post> result = new ArrayList<>(53);
-        int id = 1;
+    public static Post load(String html) throws Exception {
+        Post post = new Post();
         SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
-        for (int i = 1; i <= page; i++) {
-            Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers/" + i).get();
-            Elements row = doc.select("tr");
-            Elements posts = row.select(".postslisttopic");
-            for (Element td : posts) {
-                Post post = new Post();
-                Element href = td.child(0);
-                String html = href.attr("href");
-                post.setLink(html);
-                Document document = Jsoup.connect(html).get();
-                Elements texts = document.select(".msgBody");
-                post.setText(texts.eachText().get(1));
-                Elements dates = document.select(".msgFooter");
-                String date = dates.eachText().get(0);
-                post.setCreated(parser.parse(date.substring(0, date.indexOf("[")).trim()));
-                post.setName(href.text());
-                post.setId(id++);
-                result.add(post);
-            }
-
-        }
-        return result;
+        Document document = Jsoup.connect(html).get();
+        Elements texts = document.select(".msgBody");
+        post.setText(texts.eachText().get(1));
+        Elements dates = document.select(".msgFooter");
+        String date = dates.eachText().get(0);
+        post.setCreated(parser.parse(date.substring(0, date.indexOf("[")).trim()));
+        return post;
     }
 }
