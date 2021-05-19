@@ -12,7 +12,7 @@ public class PsqlStore implements Store, AutoCloseable {
         try {
             Class.forName(cfg.getProperty("driver"));
             con = DriverManager.getConnection(cfg.getProperty("url"),
-                    cfg.getProperty("username"),cfg.getProperty("password"));
+                    cfg.getProperty("username"), cfg.getProperty("password"));
             } catch (Exception e) {
                 throw new IllegalStateException(e);
             }
@@ -61,7 +61,7 @@ public class PsqlStore implements Store, AutoCloseable {
         List<Post> list = null;
         try (PreparedStatement ps = con.prepareStatement(
                 "select * from post;")) {
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Post post = new Post();
                     post.setId(rs.getInt("id"));
@@ -84,7 +84,7 @@ public class PsqlStore implements Store, AutoCloseable {
         try (PreparedStatement ps = con.prepareStatement(
                 "select * from post where id = ?;")) {
             ps.setString(1, id);
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     post.setId(rs.getInt("id"));
                     post.setName(rs.getString("name"));
