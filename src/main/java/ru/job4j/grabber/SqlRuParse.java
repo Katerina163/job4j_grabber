@@ -9,8 +9,6 @@ import ru.job4j.utils.SqlRuDateTimeParser;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.List;
 public class SqlRuParse implements Parse {
     @Override
     public List<Post> list(String link) {
-        List<Post> result = new ArrayList<>(53);
+        List<Post> result = new ArrayList<>(57);
         int id = 1;
         try {
             Document doc = Jsoup.connect(link).get();
