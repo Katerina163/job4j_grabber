@@ -12,8 +12,8 @@ public class SqlRuParseTest {
     public void testDetail() {
         String link = "https://www.sql.ru/forum/1335852/midl-java-razrabotchik-mikroservisy-spb";
         String name = "Мидл Java разработчик. Микросервисы. СПб";
-        String text = "Добрый день! " +
-                "В банке есть вакансия Java-разработчика. Микросервисы, spring boot, Hibernate. "
+        String text = "Добрый день! "
+                + "В банке есть вакансия Java-разработчика. Микросервисы, spring boot, Hibernate. "
                 + "Желателен опыт работы с Oracle - написание SQL запросов хотя бы. Ценник не "
                 + "выдающийся - 250 гросс + ДМС + премии. Флудить по этому поводу давайте не будем "
                 + "- сколько есть по штатному расписанию. Понимаю что не много, но уже и не слишком "
