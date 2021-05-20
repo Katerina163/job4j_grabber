@@ -26,18 +26,11 @@ public class SqlRuParse implements Parse {
             Elements row = doc.select("tr");
             Elements posts = row.select(".postslisttopic");
             for (Element td : posts) {
-                Post post = new Post();
+                SqlRuParse sql = new SqlRuParse();
                 Element href = td.child(0);
                 String html = href.attr("href");
+                Post post = sql.detail(html);
                 post.setLink(html);
-                Document document = Jsoup.connect(html).get();
-                Elements texts = document.select(".msgBody");
-                post.setText(texts.eachText().get(1));
-                Elements dates = document.select(".msgFooter");
-                String date = dates.eachText().get(0);
-                LocalDateTime session = parser.parse(date.substring(0, date.indexOf("[")));
-                post.setDate(Date.valueOf(session.toLocalDate()));
-                post.setName(href.text());
                 post.setId(id++);
                 result.add(post);
             }
