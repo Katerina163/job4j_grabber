@@ -20,7 +20,6 @@ public class SqlRuParse implements Parse {
     public List<Post> list(String link) {
         List<Post> result = new ArrayList<>(53);
         int id = 1;
-        SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
         try {
             Document doc = Jsoup.connect(link).get();
             Elements row = doc.select("tr");
