@@ -1,6 +1,7 @@
 package ru.job4j.grabber;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class Post {
     private int id;
@@ -47,5 +48,23 @@ public class Post {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Post post = (Post) o;
+        return Objects.equals(name, post.name) && Objects.equals(text, post.text)
+                && Objects.equals(link, post.link) && Objects.equals(date, post.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, text, link, date);
     }
 }

@@ -36,9 +36,7 @@ public class SqlRuParse implements Parse {
                 Elements dates = document.select(".msgFooter");
                 String date = dates.eachText().get(0);
                 LocalDateTime session = parser.parse(date.substring(0, date.indexOf("[")));
-                ZonedDateTime zdt = session.atZone(ZoneId.systemDefault());
-                long millis = zdt.toInstant().toEpochMilli();
-                post.setDate(new Date(millis));
+                post.setDate(Date.valueOf(session.toLocalDate()));
                 post.setName(href.text());
                 post.setId(id++);
                 result.add(post);
@@ -61,7 +59,7 @@ public class SqlRuParse implements Parse {
             Elements dates = document.select(".msgFooter");
             String date = dates.eachText().get(0);
             LocalDateTime session = parser.parse(date.substring(0, date.indexOf("[")).trim());
-            post.setDate(new Date(session.getYear(), session.getMonthValue(), session.getDayOfMonth()));
+            post.setDate(Date.valueOf(session.toLocalDate()));
             Elements names = document.select(".messageHeader");
             String name = names.eachText().get(0);
             post.setName(name.substring(0, name.indexOf("[")).trim());
