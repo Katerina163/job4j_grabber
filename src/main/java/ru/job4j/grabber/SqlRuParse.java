@@ -14,6 +14,8 @@ import java.sql.Date;
 import java.util.List;
 
 public class SqlRuParse implements Parse {
+    private SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
+
     @Override
     public List<Post> list(String link) {
         List<Post> result = new ArrayList<>(57);
@@ -23,10 +25,9 @@ public class SqlRuParse implements Parse {
             Elements row = doc.select("tr");
             Elements posts = row.select(".postslisttopic");
             for (Element td : posts) {
-                SqlRuParse sql = new SqlRuParse();
                 Element href = td.child(0);
                 String html = href.attr("href");
-                Post post = sql.detail(html);
+                Post post = detail(html);
                 post.setLink(html);
                 post.setId(id++);
                 result.add(post);
@@ -40,7 +41,6 @@ public class SqlRuParse implements Parse {
     @Override
     public Post detail(String link) {
         Post post = new Post();
-        SqlRuDateTimeParser parser = new SqlRuDateTimeParser();
         post.setLink(link);
         try {
             Document document = Jsoup.connect(link).get();
