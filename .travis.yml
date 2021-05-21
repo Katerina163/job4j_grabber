@@ -3,13 +3,13 @@ language: java
 jdk:
   - openjdk14
 
-sudo: false
-
 services:
   - postgresql
 
 before_install:
   - psql -c 'create database tracker;' -U postgres
+
+sudo: false
 
 env:
   global:
