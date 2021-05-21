@@ -15,6 +15,39 @@
         <maven.compiler.target>14</maven.compiler.target>
     </properties>
 
+    <profiles>
+    <profile>
+        <id>test</id>
+        <properties>
+            <db.url>jdbc:postgresql://127.0.0.1:5432/schema</db.url>
+            <db.username>postgres</db.username>
+            <db.password>password</db.password>
+            <db.driver>org.postgresql.Driver</db.driver>
+        </properties>
+    </profile>
+    <profile>
+        <id>production</id>
+        <properties>
+            <db.url>jdbc:postgresql://127.0.0.1:5432/schema</db.url>
+            <db.username>postgres</db.username>
+            <db.password>password</db.password>
+            <db.driver>org.postgresql.Driver</db.driver>
+        </properties>
+    </profile>
+        <profile>
+            <id>travis</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.url>jdbc:postgresql://localhost/tracker</db.url>
+                <db.username>postgres</db.username>
+                <db.password></db.password>
+                <db.driver>org.postgresql.Driver</db.driver>
+            </properties>
+        </profile>
+    </profiles>
+
 <dependencies>
     <dependency>
         <groupId>org.quartz-scheduler</groupId>
@@ -64,6 +97,26 @@
                         </configuration>
                         <goals>
                             <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.6.2</version>
+                <configuration>
+                    <changeLogFile>${basedir}/db/master.xml</changeLogFile>
+                    <url>${db.url}</url>
+                    <driver>${db.driver}</driver>
+                    <username>${db.username}</username>
+                    <password>${db.password}</password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>update</goal>
                         </goals>
                     </execution>
                 </executions>

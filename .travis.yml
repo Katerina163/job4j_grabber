@@ -5,6 +5,12 @@ jdk:
 
 sudo: false
 
+services:
+  - postgresql
+
+before_install:
+  - psql -c 'create database tracker;' -U postgres
+
 env:
   global:
     - CODECOV_TOKEN="7b2ec175-1dee-4ecd-8214-17784dce9305"
