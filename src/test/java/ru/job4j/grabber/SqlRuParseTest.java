@@ -28,7 +28,7 @@ public class SqlRuParseTest {
         post.setName(name);
         post.setText(text);
         post.setLink(link);
-        post.setDate(date);
+        post.setDate(date.toLocalDate().atTime(10, 34));
         Post result = sql.detail(link);
         assertThat(result, is(post));
     }

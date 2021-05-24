@@ -41,7 +41,7 @@ public class PsqlStoreTest {
             post.setLink("link1");
             LocalDateTime time = sql.parse("4 янв 21, 12:14");
             Date date = Date.valueOf(time.toLocalDate());
-            post.setDate(date);
+            post.setDate(date.toLocalDate().atTime(12, 14));
             store.deleteAll();
             store.save(post);
             Post result = store.getAll().get(0);

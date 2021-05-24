@@ -3,5 +3,5 @@ create table post(
 	name varchar not null,
 	text text not null,
 	link varchar not null unique,
-	created date not null
+	created timestamp not null
 );

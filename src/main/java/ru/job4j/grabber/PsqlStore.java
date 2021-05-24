@@ -29,7 +29,7 @@ public class PsqlStore implements Store, AutoCloseable {
             ps.setString(1, post.getName());
             ps.setString(2, post.getText());
             ps.setString(3, post.getLink());
-            ps.setDate(4, post.getDate());
+            ps.setTimestamp(4, Timestamp.valueOf(post.getDate()));
             ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,7 +48,7 @@ public class PsqlStore implements Store, AutoCloseable {
                     post.setName(rs.getString("name"));
                     post.setText(rs.getString("text"));
                     post.setLink(rs.getString("link"));
-                    post.setDate(rs.getDate("created"));
+                    post.setDate(rs.getTimestamp("created").toLocalDateTime());
                     list.add(post);
                 }
             }
@@ -70,7 +70,7 @@ public class PsqlStore implements Store, AutoCloseable {
                     post.setName(rs.getString("name"));
                     post.setText(rs.getString("text"));
                     post.setLink(rs.getString("link"));
-                    post.setDate(rs.getDate("created"));
+                    post.setDate(rs.getTimestamp("created").toLocalDateTime());
                 }
             }
         } catch (SQLException e) {

@@ -1,6 +1,6 @@
 package ru.job4j.grabber;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Post {
@@ -8,7 +8,7 @@ public class Post {
     private String name;
     private String text;
     private String link;
-    private Date date;
+    private LocalDateTime date;
 
     public int getId() {
         return id;
@@ -42,11 +42,11 @@ public class Post {
         this.link = link;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
